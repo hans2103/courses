@@ -4,7 +4,571 @@ class: middle, center, intro
 <img src="images/logos-hkweb-pwt.png"/>
 
 ---
-# Werken met Github
+# Begin met een basis
+
+- via Joomla.org meest recente versie downloaden
+- installeren op hostingomgeving
+- handige extensies downloaden en installeren
+- tof template downloaden en installeren
+- standaard instellingen wijzigen
+- accounts aanmaken 
+- een boel tijd verloren
+- en ga aan de slag
+
+---
+# Begin met een goede basis
+
+- Heb ergens een basis Joomla! site staan
+- Rol die uit op je lokale ontwikkelomgeving
+- En ga aan de slag
+
+---
+# Versiebeheer van de software
+
+
+
+---
+# Automatiseren waar mogelijk
+
+---
+# SCSS mixins for the win
+
+---
+class: code-14
+# Template - Protostar
+
+```php
+126: <!DOCTYPE html>
+127: <html lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>">
+128: <head>
+129: 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+130: 	<jdoc:include type="head" />
+131: </head>
+132: <body class="site <?php echo $option
+133: 	. ' view-' . $view
+134:	. ($layout ? ' layout-' . $layout : ' no-layout')
+135:	. ($task ? ' task-' . $task : ' no-task')
+136:	. ($itemid ? ' itemid-' . $itemid : '')
+137:	. ($params->get('fluidContainer') ? ' fluid' : '');
+138:	echo ($this->direction === 'rtl' ? ' rtl' : '');
+139:?>">
+```
+--
+## Pas op regel 126 begint de HTML pagina.
+Daarvoor alleen maar PHP functies
+
+---
+# Nadelen
+
+- foutgevoelig
+- geen overzicht
+- moeilijk herbruikbaar in overrides
+
+--
+## Conflicten gegarandeerd! 
+(en dus debug-uren)
+
+---
+class: code-14
+# Template - PerfectTemplate
+
+```php
+24: <!DOCTYPE html>
+25: <html class="html no-js" lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>">
+26: <head>
+27:     <jdoc:include type="head"/>
+28:     <noscript>
+29:         <link href="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template; ?>/css/font.css"
+30:               rel="stylesheet" type="text/css"/>
+31:     </noscript>
+32: </head>
+33: <body class="<?php echo PWTTemplateHelper::getBodySuffix(); ?>">
+34: <?php echo PWTTemplateHelper::getAnalytics(2,'GTM-XXXXXX')['script']; ?>
+```
+--
+## 100 regels eerder begint de HTML pagina
+De PHP functies zijn verplaatst
+
+---
+class: code-14
+# De eerste 25 regels code
+
+```php
+<?php
+/*
+ * @package     perfecttemplate
+ * @copyright   Copyright (c) Perfect Web Team / perfectwebteam.nl
+ * @license     GNU General Public License version 3 or later
+ */
+
+// No direct access.
+defined('_JEXEC') or die;
+
+// Load Perfect Template Helper
+require_once JPATH_THEMES . '/' . $this->template . '/helper.php';
+require_once JPATH_THEMES . '/' . $this->template . '/html/layouts/render.php';
+
+PWTTemplateHelper::setMetadata();
+PWTTemplateHelper::setFavicon();
+PWTTemplateHelper::unloadCss();
+PWTTemplateHelper::unloadJs();
+PWTTemplateHelper::loadCss();
+PWTTemplateHelper::loadJs();
+PWTTemplateHelper::localstorageFont();
+PWTTemplateHelper::ajaxSVG();
+?>
+```
+
+---
+class: code-14
+# Bij fouten makkelijk uit te schakelen
+```php
+<?php
+/*
+ * @package     perfecttemplate
+ * @copyright   Copyright (c) Perfect Web Team / perfectwebteam.nl
+ * @license     GNU General Public License version 3 or later
+ */
+
+// No direct access.
+defined('_JEXEC') or die;
+
+// Load Perfect Template Helper
+require_once JPATH_THEMES . '/' . $this->template . '/helper.php';
+require_once JPATH_THEMES . '/' . $this->template . '/html/layouts/render.php';
+
+PWTTemplateHelper::setMetadata();
+PWTTemplateHelper::setFavicon();
+*//PWTTemplateHelper::unloadCss();
+*//PWTTemplateHelper::unloadJs();
+*//PWTTemplateHelper::loadCss();
+*//PWTTemplateHelper::loadJs();
+*//PWTTemplateHelper::localstorageFont();
+*//PWTTemplateHelper::ajaxSVG();
+?>
+```
+
+---
+class: code-14
+# Helper.php - snippet
+
+```php
+class PWTTemplateHelper
+{
+	
+	static public function template()
+	{
+		return JFactory::getApplication()->getTemplate();
+	}
+        	
+	static public function loadCss()
+	{
+		JFactory::getDocument()->addStyleSheet('templates/' . self::template() . '/css/style.css');
+	}
+```
+
+--
+## Resulteert in
+```html
+	<link href="/templates/perfecttemplate/css/style.css" rel="stylesheet" type="text/css" />
+```
+
+---
+class: code-14
+# Body classes die de weg wijzen
+```php
+class PWTTemplateHelper
+{
+	static public function getBodySuffix()
+	{
+		$classes   = array();
+		$classes[] = 'option-' . self::getPageOption();
+		$classes[] = 'view-' . self::getPageView();
+		$classes[] = self::getPageLayout() ? 'layout-' . self::getPageLayout() : 'no-layout';
+		$classes[] = self::getPageTask() ? 'task-' . self::getPageTask() : 'no-task';
+		$classes[] = 'itemid-' . self::getItemId();
+		$classes[] = self::getPageClass();
+		$classes[] = self::isHome() ? 'path-home' : 'path-' . implode('-', self::getPath('array'));
+		$classes[] = 'home-' . (int) self::isHome();
+
+		return implode(' ', $classes);
+	}
+```
+--
+## Resulteert in
+``` html
+<body class="option-com-content view-category layout-blog no-task itemid-130 path-nieuws home-0">
+```
+
+---
+# Eigen Meta data toevoegen
+
+- functies aanmaken in helper.php
+- functies oproepen in index.php
+- frontend verversen en bekijk het resultaat
+
+---
+class: code-14
+# Eigen Meta data toevoegen
+## helper.php
+```php
+class PWTTemplateHelper
+{
+	static public function setGenerator($generator)
+	{
+		JFactory::getDocument()->setGenerator($generator);
+	}
+	static public function setMetadata()
+	{
+		$doc    = JFactory::getDocument();
+		
+		$doc->setCharset('utf8');
+		$doc->setMetaData('X-UA-Compatible', 'IE=edge', true);
+		$doc->setMetaData('viewport', 'width=device-width, initial-scale=1.0');
+	}
+	static public function getSitename()
+	{
+		return JFactory::getConfig()->get('sitename');
+	}
+```
+---
+class: code-14
+# Eigen Meta data toevoegen
+## index.php
+```php
+// Load Perfect Template Helper
+require_once JPATH_THEMES . '/' . $this->template . '/helper.php';
+
+PWTTemplateHelper::setMetadata();
+PWTTemplateHelper::setGenerator(PWTTemplateHelper::getSitename());
+```
+---
+class: code-14
+# Eigen Meta data toevoegen
+## het resultaat
+```html
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="generator" content="Custom Management" />
+```
+--
+## Controle over de head
+
+---
+# TIP 4 - gebruik JLayout(s)
+
+--
+## JLayout?, nog even herhalen aub.
+- manier om (klein stukje) weergave op te bouwen
+- enkel layout bestand met specifieke output
+- data variabel meesturen
+- zit in `layouts/joomla`
+---
+# Voordelen gebruik JLayout
+- herbruikbaar door gehele site (template en extensies)
+- aanpassingen één keer doorvoeren in plaats op diverse plekken
+- niet langer copy/pasten van code in template overrides
+
+--
+- <strong>herbruikbaar in verschillende projecten</strong>
+
+---
+class: code-14
+# Eigen JLayouts functie
+- `html/layouts/render.php`
+
+```php
+class Jlayouts
+{
+	public static function render($type, $data = '')
+	{
+		$template = JFactory::getApplication()->getTemplate();
+		$jlayout  = new JLayoutFile($type, JPATH_THEMES . '/' . $template . '/html/layouts/template');
+
+		return $jlayout->render($data);
+	}
+```
+--
+Zorgt er voor dat eigen JLayouts vanuit `html/layouts/template/` opgeroepen kunnen worden. 
+
+---
+class: code-14
+# Eigen JLayouts voor datum notatie
+toegepast in `html/categories/blog_item.php`
+
+```php
+if ($params->get('show_publish_date')) :
+	echo JLayoutHelper::render('template.content.create_date', array('date' => $this->item->created, 'format' => 'DATE_FORMAT_CC1'));
+endif;
+```
+
+vraagt om `html/layouts/template/content/create_date.php`
+
+--
+## Datum is taalstring
+override in `language/overrides/nl-NL-override.ini`
+```ini
+DATE_FORMAT_CC1="F Y"
+```
+output: maand jaar
+
+---
+class: code-14
+# Eigen JLayouts - inhoud
+- `html/layouts/template/content/create_date.php`
+
+```php
+<?php
+defined('JPATH_BASE') or die;
+
+$date   = $displayData['date'];
+$class  = isset($displayData['class']) ? $displayData['class'] : 'content';
+$format = JText::_($displayData['format']);
+
+echo '<span class="' . $class . '__create">';
+echo '<time datetime="' . JHtml::_('date', $date, 'c') . '" itemprop = "dateCreated" >';
+echo JHtml::_('date', $date, $format);
+echo '</time>';
+echo '</span>';
+```
+
+--
+## Resulteert in
+
+```php
+<span class="content__create"><time datetime="2017-02-17T10:31:00+01:00" itemprop="dateCreated">februari 2017</time></span>
+```
+
+---
+# Eigen JLayouts - Google Maps
+- `html/layouts/template/blocks/gmap.php`
+
+- op te roepen via:
+
+```php
+<?php echo Jlayouts::render('block-gmap'); ?>
+```
+
+---
+class: code-7
+# Eigen JLayouts - Google Maps
+
+```php
+<?php
+
+defined('_JEXEC') or die;
+
+$apikey    = '';
+$latitude  = '';
+$longitude = '';
+$color     = '';
+$marker    = JUri::root() . '/images/map-marker.png';
+$title     = PWTTemplateHelper::getSitename();
+?>
+<div class="block__gmap--wrapper">
+    <div id="map-canvas" class="block__gmap--canvas"></div>
+</div>
+<script type="text/javascript"
+        src="https://maps.googleapis.com/maps/api/js?key=<?php echo $apikey; ?>"></script>
+<script type="text/javascript">
+    function initialize(offset) {
+        var myLatlng = new google.maps.LatLng(<?php echo $latitude; ?>, <?php echo $longitude; ?>);
+        var mapOptions = {
+            center: myLatlng,
+            zoom: 13,
+            zoomControlOptions: {style: google.maps.ZoomControlStyle.SMALL},
+            mapTypeControl: false,
+            streetViewControl: false,
+            scrollwheel: false,
+            keyboardShortcuts: false,
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            styles: [
+                {
+                    stylers: [
+                        {hue: "<?php echo $color; ?>"},
+                        {saturation: -20}
+                    ]
+                }, {
+                    featureType: "road",
+                    elementType: "geometry",
+                    stylers: [
+                        {lightness: 100},
+                        {visibility: "simplified"}
+                    ]
+                }, {
+                    featureType: "road",
+                    elementType: "labels",
+                    stylers: [
+                        {visibility: "simplified"}
+                    ]
+                }, {
+                    featureType: "poi",
+                    elementType: "labels",
+                    stylers: [
+                        {visibility: "off"}
+                    ]
+                }, {
+                    featureType: "poi.business",
+                    elementType: "labels",
+                    stylers: [
+                        {visibility: "off"}
+                    ]
+                }, {
+                    featureType: "water",
+                    elementType: "labels",
+                    stylers: [
+                        {visibility: "off"}
+                    ]
+                }
+            ]
+        };
+        var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+        var image = new google.maps.MarkerImage('<?php echo $marker; ?>', null, null, null, new google.maps.Size(75, 75));
+        var marker = new google.maps.Marker({
+            position: myLatlng,
+            icon: image,
+            map: map,
+            title: '<?php echo $title; ?>'
+        });
+        var center;
+
+        function calculateCenter() {
+            center = map.getCenter();
+        }
+
+        google.maps.event.addDomListener(map, "idle", function () {
+            calculateCenter();
+        });
+        google.maps.event.addDomListener(window, "resize", function () {
+            map.setCenter(center);
+        });
+        google.maps.Map.prototype.panToWithOffset = function (latlng, offsetX, offsetY) {
+            var map = this;
+            var ov = new google.maps.OverlayView();
+            ov.onAdd = function () {
+                var proj = this.getProjection();
+                var aPoint = proj.fromLatLngToContainerPixel(latlng);
+                aPoint.x = aPoint.x + offsetX;
+                aPoint.y = aPoint.y + offsetY;
+                map.panTo(proj.fromContainerPixelToLatLng(aPoint));
+            };
+            ov.draw = function () {
+            };
+            ov.setMap(this);
+        };
+        map.panToWithOffset(myLatlng, -(offset), 0);
+    }
+    function googleMap() {
+        var viewportwidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+        if (viewportwidth <= 600) {
+            initialize(0);
+        } else {
+            initialize(200);
+        }
+    }
+    googleMap();
+    google.maps.event.addDomListener(window, "resize", function () {
+        googleMap();
+    });
+</script>
+```
+
+---
+# Eigen JLayouts - Gmap
+
+<img src="jd17nl/images/jlayouts-gmap.png"/>
+
+---
+# Joomla! core kan veel
+
+
+
+---
+# Joomla! 3.7 custom fields
+
+---
+# Eigen plugin 
+
+---
+
+
+Ik bouw onder ander websites met Joomla!
+
+Joomla installatie
+installatie van handige extensies
+kopieren van recent template
+slopen van template
+en beginnen maar
+
+
+Dat is niet handig
+Handiger is om een default kale joomla installatie te hebben waarmee je direct van start kunt
+
+Tip 1: heb een basis joomla template beschikbacue
+
+
+Elke keer de site uploaden naar de nieuwe plek is ook niet echt snel
+
+
+ik werk daarom graag lokaal aan de websites
+en gebruik daarvoor Mamp en PhpStorm en Sequel Pro
+
+
+
+
+
+
+
+
+# Automatiseer waar mogelijk
+
+
+# DRY
+
+
+
+
+
+
+
+
+
+# Het ontstaan van de template helper
+- screenshot van veul code boven <html>
+- niet elk project heeft dezelfde functionaliteit nodig
+- helper.php to the rescue
+- functies oproepen waar nodig
+
+
+
+
+# Mapjes mapjes en mapjes
+
+
+
+
+
+# Print het design
+en krijg hierdoor overzicht
+
+<img src="jd17nl/images/print-design.jpg" />
+
+---
+
+# Versiebeheer van de software
+
+
+---
+
+
+
+
+---
+
+
+
+
 
 
 
@@ -50,7 +614,9 @@ class: middle, center
 class: middle, center
 <img src="jd17nl/images/contrast-na.png" />
 
+---
 
+Programmeer in het Engels
 
 ---
 class: middle, center, width100
@@ -72,378 +638,6 @@ class: middle, center, width100
 @fd-ui-meta-color: #585858;
 ```
 
-
-
-
-
-
-<img src="jd16nl/images/label-voor-mobiel.png" />
-
----
-# Mobile-Friendly test
-- https://www.google.com/webmasters/tools/mobile-friendly
-
-<img src="jd16nl/images/05-mobile-check-joomladagen-result.png" />
-
----
-# Mobile-Friendly test
-Maar dit is hoe Google de site ziet
-<img src="jd16nl/images/05-mobile-check-joomladagen.png" />
-
----
-# Robots blokkeren de content
-Aanwezigheid van verouderde robots.txt
-```
-User-agent: *
-Disallow: /administrator/
-Disallow: /cache/
-Disallow: /cli/
-Disallow: /components/
-Disallow: /images/
-Disallow: /includes/
-Disallow: /installation/
-Disallow: /language/
-Disallow: /libraries/
-Disallow: /logs/
-Disallow: /media/
-Disallow: /modules/
-Disallow: /plugins/
-Disallow: /templates/
-Disallow: /tmp/
-```
-
----
-# Joomla! 3.5 robots.txt
-```
-User-agent: *
-Disallow: /administrator/
-Disallow: /bin/
-Disallow: /cache/
-Disallow: /cli/
-Disallow: /components/
-Disallow: /includes/
-Disallow: /installation/
-Disallow: /language/
-Disallow: /layouts/
-Disallow: /libraries/
-Disallow: /logs/
-Disallow: /modules/
-Disallow: /plugins/
-Disallow: /tmp/
-```
-
----
-# Joomladagen.nl responsive
-
-<img src="jd16nl/images/03-joomladagen-screens.jpg" />
-
----
-# Responsive Web Design Testing Tool
-- http://mattkersley.com/responsive/
-<img src="jd16nl/images/responsive-webdesign-testing-tool.png" />
-
----
-# W3C mobileOK Checker
-- http://validator.w3.org/mobile/
-<img src="jd16nl/images/validator-w3-org-mobile.png" />
-
----
-# Werk aan de winkel
-
-## Volgend jaar een nieuwe site joomladagen.nl
-
-- mobiel vriendelijk
-- voor zowel W3C mobileOK Checker
-- als voor Google mobile checker
-- suggesties zijn welkom op hans@joomladagen.nl
-
----
-# Maar nu naar je eigen website
-## Stappenplan
-
-- Hoe ziet de site er uit op mobiel?
-- Hoe zou je willen dat de site er op mobiel uit ziet?
-- - apart design
-- - responsive
-- Wijzigen maar...
-
-- klinkt net zo eenvoudig als het tekenen van een paard
-
----
-<img src="jd16nl/images/How+to+draw+a+horse.jpg" style="height:682px;" />
-
----
-# Google Resizer
-- http://design.google.com/resizer/
-
-<img src="jd16nl/images/orangemonkeytours-old.gif" />
-
----
-# Google Resizer - mobiel
-<img src="jd16nl/images/orangemonkeytours-mobile.gif" />
-
----
-# Multi-device layout patterns
-## Luke Wroblewski
-- http://www.lukew.com/ff/entry.asp?1514
-<img src="jd16nl/images/md-patterns2.png" />
-
----
-# Huidige structuur
-
-<img src="jd16nl/images/orangemonkeytour-table.png" />
-
----
-# Gewenste structuur
-
-<img src="jd16nl/images/flexbox-basis.png" />
-
----
-# Flexbox for the win
-- http://caniuse.com/#search=flexbox
-<img src="jd16nl/images/caniuse-flexbox.png" />
-
----
-# Codepen voor de codevoorbeelden
-- http://codepen.io/team/css-tricks/pen/jqzNZq
-
-<img src="jd16nl/images/codepen-flexbox.png" />
-
----
-# Huidige structuur
-
-```
-<body>
-<div class="wrapper">
-  <div class="header">
-    <div class="header-image">...</div>
-    <div class="tools">...</div>
-    <table width="100%" border="0" cellpadding="0">
-      <tbody><tr>
-        <td class="left">...</td>
-        <td class="middle">...</td>
-        <td class="right">...</td>
-      </tr></tbody>
-    </table>
-    <div class="conditions">...</div>
-    <div class="footer">...</div>
-  </div>
-</div>
-</body>
-```
-
----
-# Gewenste structuur
-```
-<body>
-<div class="site">
-  <header class="site__header">...</header>
-  <div class="site__tools">...</div>
-  <div class="site__main">...</div>
-  <aside class="site__aside site__aside-1">...</aside>
-  <aside class="site__aside site__aside-2">...</aside>
-  <div class="site__footer">...</div>
-</body>
-```
-
----
-# index.php in huidige template
-- Op je testomgeving met de bestaande template
-- index.php kopieren naar index-orig.php
-- nieuw bestand index-new.php
-- nieuw bestand index.php met de volgend info:
-
-```
-<?php
-defined('_JEXEC') or die;
-
-include_once('index-new.php');
-//include_once('index-orig.php');
-```
-
----
-# Viewport toevoegen
-voorkom dat device gaat herschalen
-
-```
-<meta name="viewport"
-  content="width=device-width, 
-           user-scalable=yes,
-           initial-scale=1">
-```
-
-voorkom dat user gaat pinchen en zoomen
-```
-<meta name="viewport" 
-  content="width=device-width,
-           user-scalable=no,
-           initial-scale=1,
-           maximum-scale=1">
-```
-advies: kies voor het eerste
-
----
-# Toevoegen kan ook vanuit Joomla 
-
-<img src="jd16nl/images/template-edit-joomla.gif" />
-
----
-# Begin vanuit mobiel
-
-```
-.site {
-	display: flex;
-	flex-flow: row wrap;
-	justify-content: center;
-	max-width:1200px;
-	margin:0 auto;
-	padding:5px;
-}
-
-.site__header,
-.site__tools,
-.site__main,
-.site__aside,
-.site__footer {
-	flex: 1 100%;
-}
-```
-
----
-# Nu al geweldig op mobiel
-
-<img src="jd16nl/images/orangemonkeytours-mobile-no-media.gif" />
-
----
-# Maar minder op desktop
-
-<img src="jd16nl/images/orangemonkeytours-desktop-no-media.gif" />
-
----
-# Media-queries bieden de oplossing
-
-```
-@media only screen and (min-width: 768px) {
-	.site__main {
-		flex: 1 0px;
-		order: 2;
-	}
-	.site__aside.site__aside-1 {
-		flex: 0 280px;
-	}
-	.site__aside-1 {
-		order: 1;
-	}
-	.site__aside-2 {
-		order: 3;
-	}
-	.site__footer {
-		order: 4;
-	}
-}
-```
-
----
-# Twee kolommen... nog geen drie
-
-<img src="jd16nl/images/orangemonkey-mediaquery-768.png" />
-
----
-# Meer media-queries
-
-```
-@media only screen and (min-width: 1024px) {
-	.site__aside.site__aside-2 {
-		flex: 0 240px;
-	}
-}
-```
-
----
-# Eindresultaat
-
-<img src="jd16nl/images/orangemonkey-eindresultaat.png" />
-
----
-# Maar dan... 
-
-- afbeeldingen die te groot zijn
-- tabellen die niet passen
-- iFrame die niet pas
-
-> The devil is in the details
-
----
-# Responsive images
-```
-img {max-width: 100%;}
-```
-
-<img src="jd16nl/images/image-max-width.png" />
-
----
-# Tables
-
-<img src="jd16nl/images/non-responsive-table.gif" />
-
----
-# Bootstrap gebruikers
-- http://codepen.io/SitePoint/full/raXdwZ/
-
-<img src="jd16nl/images/responsive-table-bootstrap.gif" />
-
----
-# CSS-Tricks Table Roundup
-- https://css-tricks.com/responsive-data-table-roundup/
-
-<img src="jd16nl/images/css-tricks-table.jpg" />
-
----
-# iFrame
-
-<img src="jd16nl/images/iframe-desktop-before.png" />
-
----
-# iFrame
-
-<img src="jd16nl/images/iframe-mobiel-before.png" />
-
----
-# HTML en CSS wijziging
-Verwijder widht en height uit iFrame html tag plus
-
-```
-iframe {
-	border:none;
-	width:100%;
-	height:100%;
-	min-height:600px;
-}
-@media only screen and (min-width: 1084px) {
-	iframe {
-		width: 768px;
-	}
-}
-```
-
----
-# iFrame
-
-<img src="jd16nl/images/iframe-desktop-after.png" />
-
----
-# iFrame
-
-<img src="jd16nl/images/iframe-mobiel-after.png" />
-
----
-# Eind goed al goed
-
-- Hoe ziet de site er op mobiel uit?
-- Hoe wil je dat de site er uit komt te zien?
-- Keuze voor responsive of separaat template
-- viewport & media-queries & details :-)
-- flexbox is cool!
 
 ---
 class: middle, center, intro
