@@ -1,7 +1,11 @@
 class: middle, center, intro
 # Best Practice: Joomla Templating
 ## Hans Kuijpers
-<img src="images/logos-hkweb-pwt.png"/>
+<img src="jd17nl/images/hkweb-perfectwebteam.png"/>
+
+---
+class: middle, center
+# TIP 1 - de basis
 
 ---
 # Begin met een basis
@@ -11,9 +15,12 @@ class: middle, center, intro
 - handige extensies downloaden en installeren
 - tof template downloaden en installeren
 - standaard instellingen wijzigen
-- accounts aanmaken 
+- accounts aanmaken
+ 
+--
+
 - een boel tijd verloren
-- en ga aan de slag
+- en nu pas aan de slag
 
 ---
 # Begin met een goede basis
@@ -23,15 +30,188 @@ class: middle, center, intro
 - En ga aan de slag
 
 ---
-# Versiebeheer van de software
+# Eenmalig eigen basis opzetten
 
-
+- Investeer eenmalig tijd in een goede basis
+- Gebruik als kickstart voor ieder template-project
+- Beheer basis via bijvoorbeeld een github-repo
+- Maak bibliotheek van overrides, JavaScript, SCSS
 
 ---
-# Automatiseren waar mogelijk
+
+background-image: url(jd17nl/images/perfect-site-frontend.png)
 
 ---
-# SCSS mixins for the win
+
+background-image: url(jd17nl/images/perfect-site--resultaat.png)
+
+---
+
+background-image: url(jd17nl/images/perfect-site-github.png)
+
+---
+class: middle, center
+# TIP 2 - automatiseer waar mogelijk
+
+---
+# Building tools
+
+- Zoveel mogelijk stappen automatiseren
+- Snel en eenvoudig
+- Performance verbeteren
+- Fouten minimaliseren
+
+---
+# Welke taken?
+
+- LESS of SASS compileren naar CSS
+- SASS source map aanmaken
+- JavaScript samenvoegen 
+- CSS of JavaScript minifyen
+- Git commits, pushen en pullen
+- Afbeeldingen comprimeren
+- Bestanden kopieren
+
+--
+## Bijvoorbeeld met Grunt
+
+---
+class: code-14
+# Grunt task sass compilatie
+ ## SCSS => CSS
+
+```npm
+'use strict';
+
+//
+module.exports = {
+    dist: {
+        options: {
+            includePaths: [
+                require("bourbon").includePaths,
+                require("bourbon-neat").includePaths,
+                require("node-normalize-scss").includePaths
+            ]
+        },
+        files: {
+*            '<%= paths.template %>/css/style.css': '<%= paths.assets %>/scss/style.scss',
+            '<%= paths.template %>/css/grid.css': '<%= paths.assets %>/scss/grid.scss',
+            '<%= paths.template %>/css/font.css': '<%= paths.assets %>/scss/font.scss'
+        }
+    }
+};
+```
+
+---
+class: middle, center
+# TIP 3 - SCSS mixins for the win
+
+---
+
+background-image: url(jd17nl/images/bootstrap.png)
+
+---
+
+background-image: url(jd17nl/images/neat.png)
+
+---
+class: middle, center
+<img src="jd17nl/images/neat-zero.png"/>
+
+---
+
+background-image: url(jd17nl/images/arrow-0.png)
+
+---
+
+background-image: url(jd17nl/images/arrow-1.png)
+
+---
+class: code-14
+# section/_heading.scss 
+
+```scss
+.section {
+	@include e('heading') {
+		@include m('light') {
+*			@include heading($quarter-spanish-white);
+		}
+	
+		@include m('white') {
+			@include heading(white);
+		}
+	
+		@include m('image') {
+			@include heading--clipart;
+		}
+	}
+}
+```
+---
+class: code-14
+# @include heading -> mixin heading
+
+```scss
+@mixin heading($bgcolor: white) {
+	@include heading--base;
+*	@include arrow-bottom(2.5em, 50, transparent, $bgcolor);
+}
+
+@mixin heading--clipart {
+	@include heading--base;
+	@include arrow-bottom-clipart(50);
+}
+```
+
+---
+class: code-14
+# @include arrow-button -> mixin arrow-button
+
+```scss
+@mixin arrow-bottom($border-width: 2.5em, $z-index: 50, $color-background: transparent, $color-arrow: white) {
+	background-position: 50% 0;
+	background-size: cover;
+	background-repeat:no-repeat;
+
+	position: relative;
+	z-index: $z-index;
+	&:before,
+	&:after {
+		position: absolute;
+		bottom: 0;
+		border-bottom: $border-width solid $color-arrow;
+		display: block;
+		content: " ";
+	}
+	&:before {
+		width: 50%;
+		left: 0;
+		border-right: $border-width solid $color-background;
+
+	}
+	&:after {
+		left: 50%;
+		right: 0;
+		border-left: $border-width solid $color-background;
+	}
+}
+```
+
+---
+class: code-14
+# Met css als resultaat
+
+- scss -> css
+- vendorprefix
+- minified
+
+```css
+.section__heading--light:after,.section__heading--white:after,.section__home-lead:after{border-left:2.5em solid transparent;right:0}.section__blog-items .readmore a:active,.section__blog-items .readmore a:focus,.section__blog-items .readmore a:hover,.section__cases-items .readmore a:active,.section__cases-items .readmore a:focus,.section__cases-items .readmore a:hover{outline:0}.section__blog-items .readmore a:focus,.section__blog-items .readmore a:hover,.section__cases-items .readmore a:focus,.section__cases-items .readmore a:hover{background:#dabc7f}.section__heading--light,.section__heading--white,.section__home-lead{background-position:50% 0;background-size:cover;background-repeat:no-repeat}.section__heading--light:before,.section__heading--white:before,.section__home-lead:before{width:50%;border-right:2.5em solid transparent}.section__fulltext .container:last-child .section__content,.section__fulltext .section__aside-footer--wrapper:last-child .section__content{margin-bottom:36px}.section__heading--light{min-height:9rem;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;position:relative;z-index:50}.section__heading--light h1{font:700 30px/40px Montserrat,Helvetica,sans-serif;margin-top:-.5rem;color:#fff;text-align:center;text-shadow:0 0 5px #272F38;text-transform:uppercase}@media only screen and (min-width:760px){.section__heading--light h1{font:700 36px/65px Montserrat,Helvetica,sans-serif;margin-top:-1.5rem}}.section__heading--light:after,.section__heading--light:before{position:absolute;bottom:0;border-bottom:2.5em solid #f7f0e3;display:block;content:" "}.section__heading--light:before{left:0}.section__heading--light:after{left:50%}
+```
+
+---
+class: middle, center
+# TIP 4 - de templateHelper
 
 ---
 class: code-14
@@ -65,6 +245,7 @@ Daarvoor alleen maar PHP functies
 - moeilijk herbruikbaar in overrides
 
 --
+
 ## Conflicten gegarandeerd! 
 (en dus debug-uren)
 
@@ -78,12 +259,11 @@ class: code-14
 26: <head>
 27:     <jdoc:include type="head"/>
 28:     <noscript>
-29:         <link href="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template; ?>/css/font.css"
-30:               rel="stylesheet" type="text/css"/>
-31:     </noscript>
-32: </head>
-33: <body class="<?php echo PWTTemplateHelper::getBodySuffix(); ?>">
-34: <?php echo PWTTemplateHelper::getAnalytics(2,'GTM-XXXXXX')['script']; ?>
+29:         <link href="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template; ?>/css/font.css" rel="stylesheet" type="text/css"/>
+30:     </noscript>
+31: </head>
+32: <body class="<?php echo PWTTemplateHelper::getBodySuffix(); ?>">
+33: <?php echo PWTTemplateHelper::getAnalytics(2,'GTM-XXXXXX')['script']; ?>
 ```
 --
 ## 100 regels eerder begint de HTML pagina
@@ -218,6 +398,7 @@ class PWTTemplateHelper
 	{
 		JFactory::getDocument()->setGenerator($generator);
 	}
+	
 	static public function setMetadata()
 	{
 		$doc    = JFactory::getDocument();
@@ -226,6 +407,7 @@ class PWTTemplateHelper
 		$doc->setMetaData('X-UA-Compatible', 'IE=edge', true);
 		$doc->setMetaData('viewport', 'width=device-width, initial-scale=1.0');
 	}
+	
 	static public function getSitename()
 	{
 		return JFactory::getConfig()->get('sitename');
@@ -256,10 +438,11 @@ class: code-14
 ## Controle over de head
 
 ---
-# TIP 4 - gebruik JLayout(s)
+class: middle, center
+# TIP 5  - gebruik JLayout(s)
 
---
-## JLayout?, nog even herhalen aub.
+---
+# JLayout?, nog even herhalen aub.
 - manier om (klein stukje) weergave op te bouwen
 - enkel layout bestand met specifieke output
 - data variabel meesturen
@@ -478,166 +661,6 @@ $title     = PWTTemplateHelper::getSitename();
 # Eigen JLayouts - Gmap
 
 <img src="jd17nl/images/jlayouts-gmap.png"/>
-
----
-# Joomla! core kan veel
-
-
-
----
-# Joomla! 3.7 custom fields
-
----
-# Eigen plugin 
-
----
-
-
-Ik bouw onder ander websites met Joomla!
-
-Joomla installatie
-installatie van handige extensies
-kopieren van recent template
-slopen van template
-en beginnen maar
-
-
-Dat is niet handig
-Handiger is om een default kale joomla installatie te hebben waarmee je direct van start kunt
-
-Tip 1: heb een basis joomla template beschikbacue
-
-
-Elke keer de site uploaden naar de nieuwe plek is ook niet echt snel
-
-
-ik werk daarom graag lokaal aan de websites
-en gebruik daarvoor Mamp en PhpStorm en Sequel Pro
-
-
-
-
-
-
-
-
-# Automatiseer waar mogelijk
-
-
-# DRY
-
-
-
-
-
-
-
-
-
-# Het ontstaan van de template helper
-- screenshot van veul code boven <html>
-- niet elk project heeft dezelfde functionaliteit nodig
-- helper.php to the rescue
-- functies oproepen waar nodig
-
-
-
-
-# Mapjes mapjes en mapjes
-
-
-
-
-
-# Print het design
-en krijg hierdoor overzicht
-
-<img src="jd17nl/images/print-design.jpg" />
-
----
-
-# Versiebeheer van de software
-
-
----
-
-
-
-
----
-
-
-
-
-
-
-
-Klanten issues aan laten maken
-
-
----
-
-# Default Joomla! installatie
-
-
-- 
-
-- print het design en krijg overzicht
-- hak in blokjes
-- werk met een styleguide
-- clone html presentatie van PWT
-- werken met JLayouts
-- test het resultaat met YellowLabs
-- werk met een helper
-- zorg voor een 404 pagina 
-- werk met Github
-
----
-
-# Kleurcontrast 
-
-- http://contrastchecker.com/
-
----
-class: middle, center
-<img src="jd17nl/images/contrast-voor.png" />
-
----
-
-<img src="jd17nl/images/contrast-test-voor.png" />
-
----
-
-<img src="jd17nl/images/contrast-test-na.png" />
-
----
-class: middle, center
-<img src="jd17nl/images/contrast-na.png" />
-
----
-
-Programmeer in het Engels
-
----
-class: middle, center, width100
-<img src="jd17nl/images/giphy-any_questions.gif"/>
-
----
-class: middle, center, width100
-<img src="jd17nl/images/giphy-thankyou.gif"/>
-
----
-
-
-
----
-# Contrast
-
-
-```
-@fd-ui-meta-color: #585858;
-```
-
 
 ---
 class: middle, center, intro
