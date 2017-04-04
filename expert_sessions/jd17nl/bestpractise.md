@@ -39,15 +39,15 @@ class: middle, center
 
 ---
 
-background-image: url(jd17nl/images/perfect-site-frontend.png)
+<img src="jd17nl/images/perfect-site-frontend.png"/>
 
 ---
 
-background-image: url(jd17nl/images/perfect-site--resultaat.png)
+<img src="jd17nl/images/perfect-site--resultaat.png"/>
 
 ---
 
-background-image: url(jd17nl/images/perfect-site-github.png)
+<img src="jd17nl/images/perfect-site-github.png"/>
 
 ---
 class: middle, center
@@ -108,11 +108,11 @@ class: middle, center
 
 ---
 
-background-image: url(jd17nl/images/bootstrap.png)
+<img src="jd17nl/images/bootstrap.png"/>
 
 ---
 
-background-image: url(jd17nl/images/neat.png)
+<img src="jd17nl/images/neat.png"/>
 
 ---
 class: middle, center
@@ -120,11 +120,11 @@ class: middle, center
 
 ---
 
-background-image: url(jd17nl/images/arrow-0.png)
+<img src="jd17nl/images/arrow-0.png"/>
 
 ---
 
-background-image: url(jd17nl/images/arrow-1.png)
+<img src="jd17nl/images/arrow-1.png"/>
 
 ---
 class: code-14
