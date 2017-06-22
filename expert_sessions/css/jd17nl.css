@@ -5,10 +5,9 @@ html, body {
 .session-bg,
 .remark-slides-area {
 	background-color: transparent;
-	background-image: url('../images/joomladagen-bg.jpg');
-	background-repeat: no-repeat;
-	background-position: 50% 100%;
-	background-size: cover;
+	background-image: url('../images/jd17nl-bg.jpg');
+	background-repeat: repeat;
+	background-position: 50% 0;
 }
 
 .container.index {
@@ -238,6 +237,21 @@ table {
 	color: #fff;
 }
 
+.width100 {
+	background: inherit;
+}
+
+.width100 img {
+	border: none;
+	width: 100%;
+	max-width: 100%;
+	margin: 0 auto;
+}
+
+.width100 .remark-slide-number {
+	display: none;
+}
+
 .player-controls {
 	position: absolute;
 	top: 0;
@@ -273,9 +287,4 @@ table {
 .container-title .title-box {
 	text-align: center;
 	margin-top: 10%;
-}
-
-.img-max-60 img {
-	max-width: 60%;
-	margin: 0 auto;
 }
