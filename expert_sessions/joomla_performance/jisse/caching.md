@@ -1,7 +1,8 @@
-class: middle
+class: middle, center, intro
 # Cache handlers
 ## door Jisse Reitsma
 ### <a href="http://twitter.com/jissereitsma">@jissereitsma</a>
+<img src="/images/logos.png">
 
 ---
 # Cache handlers
