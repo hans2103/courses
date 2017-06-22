@@ -1,0 +1,258 @@
+html, body {
+    min-height: 100%;
+}
+
+.session-bg,
+.remark-slides-area {
+    background: transparent url(../images/clock.gif) center center no-repeat;
+    background-size: cover;
+}
+
+.container.index {
+	width: 50%;
+	float: left;
+}
+
+.container-title .title-box {
+	text-align: right;
+	margin-top: 30%;
+}
+
+div.container-program {
+    text-align: left;
+    position: absolute;
+	font-weight: 800;
+	text-shadow: rgba(0,0,0,.85) 0 0 10px;
+	background-color: rgba(0,0,0, 0.6);
+	height:100%;
+	display: block;
+	bottom: 0;
+	right:0;
+	color: white;
+}
+
+div.container-program ul {
+    list-style: none;
+    margin: 20px;
+    padding-left: 0;
+	width: 500px;
+}
+
+div.container-program li {
+    line-height: 1.8;
+    font-size: 22px;
+}
+
+div.container a {
+    color: white;
+    text-decoration: none;
+    font-size: 140%;
+}
+
+div.title-box {
+    color: white;
+    text-align: center;
+}
+
+div.title-box h1 {
+    font-size: 360%;
+    text-shadow: rgba(0,0,0,1) 0 0 30px;
+}
+
+div.title-box p {
+    font-size: 160%;
+    text-shadow: rgba(0,0,0,1) 0 0 20px;
+}
+
+div.title-box img {
+	max-width: 60%;
+}
+
+.remark-slide-container {
+}
+
+.remark-slide-content {
+    padding: 0em 1em 0 1em;
+    background: #f3f3f3;
+    background-repeat: no-repeat;
+}
+.remark-slide table {
+    font-size: 21px;
+}
+
+.remark-slide table tr {
+    border-bottom: 1px solid #ccc;
+}
+
+.remark-slide table td {
+    padding-right: 10px;
+}
+
+.remark-slide {
+}
+
+.remark-fading {
+    display: none;
+}
+
+.remark-slide-scaler {
+    box-shadow: none;
+}
+
+.remark-slide-number {
+    right: 10px;
+    bottom: 0px;
+    font-size: 20px;
+}
+
+h1, h2, h3 {
+}
+
+.remark-slide-content,
+.remark-slide-content p {
+    font-size: 28px;
+}
+
+.remark-code,
+.remark-inline-code {
+}
+
+.remark-slide h1 {
+    margin-top: 10px;
+}
+
+.remark-slide img {
+    max-width: 100%;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    display: block;
+}
+
+.remark-slide video {
+    max-width: 100%;
+    border-radius: 10px;
+    display: block;
+}
+
+li {
+    line-height: 190%;
+}
+
+li li {
+    font-size: 80%;
+    color: #333;
+}
+
+.hljs-googlecode .hljs {
+    padding: 0;
+    background: transparent;
+}
+
+code {
+    background: #d2e8f8;
+    color: #333;
+    padding: 3px 8px;
+}
+
+pre {
+    background: white;
+}
+
+pre .remark-code {
+    color: black;
+    font-size: 20px;
+}
+
+.code-18 .remark-code {
+    font-size: 18px;
+}
+
+.code-16 .remark-code {
+    font-size: 16px;
+}
+
+.code-14 .remark-code {
+    font-size: 14px;
+}
+
+.code-12 .remark-code {
+    font-size: 12px;
+}
+
+.code-11 .remark-code {
+    font-size: 11px;
+}
+
+.code-10 .remark-code {
+    font-size: 10px;
+}
+
+.code-9 .remark-code {
+    font-size: 9px;
+}
+
+.code-8 .remark-code {
+    font-size: 8px;
+}
+
+.code-7 .remark-code {
+    font-size: 7px;
+}
+
+.center.middle h1 {
+    color: #2c4b71;
+    font-size: 80px;
+}
+
+table {
+    width: 100%;
+}
+
+.size-20 {
+    font-size: 20px;
+}
+
+.intro {
+    background: inherit;
+}
+
+.intro img {
+	border:none;
+	max-width: 70%;
+	margin: 0 auto;
+}
+
+.intro .remark-slide-number {
+    display: none;
+}
+
+.intro.center.middle h1,
+.intro.center.middle h2,
+.intro.center.middle h3 {
+    text-shadow: rgba(0,0,0,1) 0 0 40px;
+    color: #fff;
+}
+
+.player-controls {
+    position: absolute;
+    top:0;
+    width: 100%;
+    border-radius: 10px;
+}
+
+.player-progress {
+    display: none;
+}
+
+.player-video-wrapper {
+    padding-top: 60px;
+}
+
+.fullscreen-active .player-controls {
+    position: relative;
+    display: none;
+}
+
+.fullscreen-active .player-video-wrapper {
+    padding-top: 0px;
+}

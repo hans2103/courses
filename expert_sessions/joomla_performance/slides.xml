@@ -1,0 +1,93 @@
+<slidesets>
+    <title>Programma</title>
+    <style>joomla_performance</style>
+
+    <slideset>
+        <id>00_welkom</id>
+        <file>joomla_performance/welkom</file>
+        <title>Welkom</title>
+    </slideset>
+
+    <slideset>
+        <id>budget</id>
+        <file>joomla_performance/robin/budget</file>
+        <title>Performance Budget</title>
+    </slideset>
+
+    <slideset>
+        <id>joomlacore</id>
+        <file>joomla_performance/sander/joomlacore</file>
+        <title>Performance &amp; Joomla! core</title>
+    </slideset>
+
+    <slideset>
+        <id>caching</id>
+        <file>joomla_performance/jisse/caching</file>
+        <title>Cache handlers</title>
+    </slideset>
+
+    <slideset>
+        <id>plugins</id>
+        <file>joomla_performance/simon/plugins</file>
+        <title>Optimalisatie plugins</title>
+    </slideset>
+
+    <slideset>
+        <id>images</id>
+        <file>joomla_performance/simon/images</file>
+        <title>Afbeeldingen optimalisatie</title>
+    </slideset>
+
+    <slideset>
+        <id>amp</id>
+        <file>joomla_performance/simon/amp</file>
+        <title>Accelerated Mobile Pages</title>
+    </slideset>
+
+    <slideset>
+        <id>pauze</id>
+        <title>- Pauze -</title>
+    </slideset>
+
+    <slideset>
+        <id>htaccess</id>
+        <file>joomla_performance/hans/htaccess</file>
+        <title>.htaccess performance</title>
+    </slideset>
+
+    <slideset>
+        <id>server</id>
+        <file>joomla_performance/jisse/server-performance</file>
+        <title>Server performance</title>
+    </slideset>
+
+    <slideset>
+        <id>servercaching</id>
+        <file>joomla_performance/sander/servercaching</file>
+        <title>Server caching</title>
+    </slideset>
+
+    <slideset>
+        <id>cdn</id>
+        <file>joomla_performance/simon/cdn</file>
+        <title>Content Delivery Networks</title>
+    </slideset>
+
+    <slideset>
+        <id>tools-technieken</id>
+        <file>joomla_performance/robin/tools-technieken</file>
+        <title>Analysetools &amp; technieken</title>
+    </slideset>
+
+    <slideset>
+        <id>afsluiting</id>
+        <file>joomla_performance/afsluiting</file>
+        <title>Afsluiting &amp; vragen</title>
+    </slideset>
+
+    <slideset>
+        <id>borrel</id>
+        <title>- Borrel -</title>
+    </slideset>
+
+</slidesets>

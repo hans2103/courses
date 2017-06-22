@@ -7,7 +7,8 @@ $slideshow = new Slideshow();
 <head>
 	<title><?php echo $slideshow->getTitle(); ?></title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-	<link rel="stylesheet" href="css/pwt.css"/>
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
+	<link rel="stylesheet" href="css/base.css"/>
 	<link rel="stylesheet" href="css/plyr.css"/>
 	<link rel="stylesheet" href="css/<?php echo $slideshow->getStyle(); ?>.css"/>
 </head>
