@@ -274,3 +274,8 @@ table {
 	text-align: center;
 	margin-top: 10%;
 }
+
+.img-max-60 img {
+	max-width: 60%;
+	margin: 0 auto;
+}

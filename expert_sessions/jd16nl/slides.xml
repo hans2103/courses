@@ -4,6 +4,11 @@
     <slideset>
         <id>responsive</id>
         <file>jd16nl/responsive</file>
-        <title>- start -</title>
+        <title>Maak je website geschikt voor mobiel</title>
+    </slideset>
+    <slideset>
+        <id>complexe_paginas</id>
+        <file>jd16nl/complexe_paginas</file>
+        <title>Complexe paginas gebruiksvriendelijk</title>
     </slideset>
 </slidesets>
