@@ -1,0 +1,146 @@
+html, body {
+    min-height: 100%;
+}
+
+.session-bg,
+.remark-slides-area {
+    background: transparent url(../images/pwt-bg.jpg) top center no-repeat;
+    background-size: cover;
+}
+
+div.container-program {
+    color: white;
+    background-color: black;
+    opacity: 0.7;
+}
+
+div.container a {
+    color: white;
+    text-decoration: none;
+    font-size: 140%;
+}
+
+div.title-box {
+    color: white;
+    text-align: center;
+}
+
+div.title-box h1 {
+    font-size: 360%;
+}
+
+div.title-box p {
+    font-size: 160%;
+}
+
+.remark-slide-container {
+}
+
+.remark-slide-content {
+    padding: 0em 2em 1em 2em;
+    background: #f3f3f3;
+    background-repeat: no-repeat;
+}
+
+.remark-slide {
+}
+
+.remark-slide-number {
+	font-size: 16px;
+}
+
+h1, h2, h3 {
+}
+
+.remark-slide-content h1 {
+    font-size: 48px;
+}
+
+.remark-slide-content,
+.remark-slide-content p {
+    font-size: 28px;
+}
+
+.remark-code,
+.remark-inline-code {
+}
+
+
+.remark-slide img {
+    max-width: 100%;
+    display: block;
+}
+
+.remark-slide video {
+    max-width: 100%;
+    border-radius: 10px;
+    display: block;
+}
+
+li {
+    line-height: 190%;
+}
+
+li li {
+    font-size: 80%;
+    color: #333;
+}
+
+.hljs-googlecode .hljs {
+    padding: 0;
+    background: transparent;
+}
+
+pre {
+    background: white;
+}
+
+pre .remark-code {
+    color: black;
+    font-size: 20px;
+}
+
+.code-18 .remark-code {
+    font-size: 18px;
+}
+
+.code-16 .remark-code {
+    font-size: 16px;
+}
+
+.code-14 .remark-code {
+    font-size: 14px;
+}
+
+.code-12 .remark-code {
+    font-size: 12px;
+}
+
+.code-11 .remark-code {
+    font-size: 11px;
+}
+
+.code-10 .remark-code {
+    font-size: 10px;
+}
+
+.code-9 .remark-code {
+    font-size: 9px;
+}
+
+.code-8 .remark-code {
+    font-size: 8px;
+}
+
+.code-7 .remark-code {
+    font-size: 7px;
+}
+
+.center.middle h1 {
+    color: #2c4b71;
+    font-size: 80px;
+}
+
+table {
+    width: 100%;
+}

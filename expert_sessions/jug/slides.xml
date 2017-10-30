@@ -1,0 +1,10 @@
+<slidesets>
+    <title>Bijeenkomsten</title>
+    <style>jug</style>
+    <slideset>
+        <id>custom_fields</id>
+        <file>jug/bussum/custom_fields</file>
+        <title>JUG Bussum okt 2017 :: Custom Fields - the next level</title>
+        <speaker>Hans</speaker>
+    </slideset>
+</slidesets>
